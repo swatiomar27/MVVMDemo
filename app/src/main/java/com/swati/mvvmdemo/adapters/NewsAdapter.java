@@ -11,10 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.swati.mvvmdemo.R;
 import com.swati.mvvmdemo.callback.IClickListener;
 import com.swati.mvvmdemo.model.NewsArticle;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull NewsAdapter.NewsViewHolder holder, int position) {
-           holder.onBindContent(articles.get(position));
+        holder.onBindContent(articles.get(position));
     }
 
     @Override

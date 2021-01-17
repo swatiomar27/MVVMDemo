@@ -5,13 +5,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
 
-    private static Retrofit retrofit = new Retrofit.Builder()
+    private static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://newsapi.org/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
 
-    public static <S> S cteateService(Class<S> serviceClass) {
+    public static <S> S createService(Class<S> serviceClass) {
         return retrofit.create(serviceClass);
     }
 

@@ -22,37 +22,40 @@ import java.util.List;
 
 public class NewsActivity extends AppCompatActivity implements IClickListener {
 
-    ArrayList<NewsArticle> articleArrayList = new ArrayList<>();
-    NewsAdapter newsAdapter;
-    RecyclerView rvHeadline;
-    ApiViewModel apiViewModel;
+    ArrayList<NewsArticle> mArticlesArrayList = new ArrayList<>();
+    NewsAdapter mNewsAdapter;
+    RecyclerView mHeadlineRecyclerView;
+    ApiViewModel mApiViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        rvHeadline = findViewById(R.id.rvNews);
+        mHeadlineRecyclerView = findViewById(R.id.rvNews);
 
-        apiViewModel = ViewModelProviders.of(this).get(ApiViewModel.class);
-        apiViewModel.init();
-        apiViewModel.getApiHitRepository().observe(this, newsResponse -> {
+        //Get View model
+        mApiViewModel = ViewModelProviders.of(this).get(ApiViewModel.class);
+        //Initialize api repository
+        mApiViewModel.init();
+        //Observe data changes through Live data
+        mApiViewModel.getApiHitRepository().observe(this, newsResponse -> {
             List<NewsArticle> newsArticles = newsResponse.getArticles();
-            articleArrayList.addAll(newsArticles);
-            newsAdapter.notifyDataSetChanged();
+            mArticlesArrayList.addAll(newsArticles);
+            mNewsAdapter.notifyDataSetChanged();
         });
 
         setupRecyclerView();
     }
 
     private void setupRecyclerView() {
-        if (newsAdapter == null) {
-            newsAdapter = new NewsAdapter(NewsActivity.this, articleArrayList);
-            rvHeadline.setLayoutManager(new LinearLayoutManager(this));
-            rvHeadline.setAdapter(newsAdapter);
-            rvHeadline.setItemAnimator(new DefaultItemAnimator());
-            rvHeadline.setNestedScrollingEnabled(true);
+        if (mNewsAdapter == null) {
+            mNewsAdapter = new NewsAdapter(NewsActivity.this, mArticlesArrayList);
+            mHeadlineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            mHeadlineRecyclerView.setAdapter(mNewsAdapter);
+            mHeadlineRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            mHeadlineRecyclerView.setNestedScrollingEnabled(true);
         } else {
-            newsAdapter.notifyDataSetChanged();
+            mNewsAdapter.notifyDataSetChanged();
         }
     }
 
@@ -60,7 +63,7 @@ public class NewsActivity extends AppCompatActivity implements IClickListener {
     public void onClickItem(View view, int adapterPosition) {
 
         Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
-        intent.putExtra(Constant.NEWS_DETAIL, articleArrayList.get(adapterPosition));
+        intent.putExtra(Constant.NEWS_DETAIL, mArticlesArrayList.get(adapterPosition));
         startActivity(intent);
     }
 }

@@ -34,7 +34,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
 
     private void navigateToQuoteOfTheDay() {
-        Intent intent = new Intent(NewsDetailActivity.this,QuotesActivity.class);
+        Intent intent = new Intent(NewsDetailActivity.this, QuotesActivity.class);
         startActivity(intent);
     }
 
